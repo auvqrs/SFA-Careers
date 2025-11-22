@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Suffield Academy — Careers</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>Suffield Academy — Careers</header>
+  <div class="container">
+
+    <!-- Careers Page (job cards grid) -->
+    <div class="grid" id="jobsGrid"></div>
+
+    <!-- Application Page (acts as a "new page") -->
+    <div class="card apply-section" id="applicationPage" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 style="margin:0">Application</h2>
+        <button class="btn ghost" onclick="goBackToCareers()">Back to Careers</button>
+      </div>
+
+      <div style="margin-top:10px" id="jobOverviewContainer">
+        <div class="muted" id="roleTitle">Role: —</div>
+        <p class="muted" id="roleShort">Role overview will appear here.</p>
+
+        <div style="margin-top:8px;padding:10px;background:#fafafa;border-radius:8px">
+          <strong>Requirements & Policies</strong>
+          <ul class="muted" style="margin:8px 0 0 18px">
+            <li>Minimum activity expectations — be active and professional.</li>
+            <li>Resignation: give at least 7 days notice (unless agreed otherwise).</li>
+            <li>Termination: breach of rules, inactivity, or misconduct may result in removal.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:10px">
+          <button class="btn" onclick="beginApplication()">I Understand & Begin Application</button>
+        </div>
+      </div>
+
+      <!-- Application Form -->
+      <form id="applicationForm" class="hidden" onsubmit="event.preventDefault();submitApplication()" style="margin-top:14px">
+        <div class="field">
+          <label>Roblox Username *</label>
+          <input type="text" id="robloxUsername" placeholder="e.g. CoolPlayer123" required />
+        </div>
+
+        <div class="field">
+          <label>Discord Username *</label>
+          <input type="text" id="discordUsername" placeholder="e.g. UserName#1234" required />
+        </div>
+
+        <div class="field">
+          <label>Time Zone *</label>
+          <input type="text" id="timeZone" placeholder="Example: GMT+1 or Europe/Belgrade" required />
+          <div class="muted">Not sure? Find your time zone: <a href="https://www.timeanddate.com/time/map/" target="_blank">timeanddate.com/time/map</a></div>
+        </div>
+
+        <div class="field">
+          <label>Email Address *</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="field">
+          <label>Select Department *</label>
+          <select id="department" onchange="loadSubjects()" required>
+            <option value="">-- Select Department --</option>
+            <option value="core">Core Subjects (English, Maths, Science)</option>
+            <option value="humanities">Humanities (History, Geography, Religious Education)</option>
+            <option value="languages">Languages (German, French, Spanish)</option>
+            <option value="creative">Creative Arts (Art & Design, Drama, Music, Fashion Design)</option>
+            <option value="tech">Technology (Food Technology, Design Technology, Computer Science)</option>
+            <option value="social">Social Sciences (Sociology, Child Development, Business, Psychology, Economics)</option>
+            <option value="pe">PE (Physical Education, Sports Science)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Select Subject(s) within Department * (min 1)</label>
+          <div id="subjectsBox" class="muted">Please choose a department first.</div>
+        </div>
+
+        <div class="field">
+          <label>Experience</label>
+          <div class="row" style="margin-bottom:8px">
+            <button type="button" class="btn small" onclick="showExpModal()">+ Add Experience</button>
+            <div class="muted" style="align-self:center">Add previous groups, ranks and estimated time worked.</div>
+          </div>
+          <div id="expList"></div>
+        </div>
+
+        <div class="field">
+          <label>Why are you interested in a career here? (min 50 characters) *</label>
+          <textarea id="interest" required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Anything else you would like to share? (optional)</label>
+          <textarea id="extra"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Select Working Days (Minimum 4) *</label>
+          <div class="days-grid">
+            <label><input type="checkbox" value="Monday" class="dayChk" /> Monday</label>
+            <label><input type="checkbox" value="Tuesday" class="dayChk" /> Tuesday</label>
+            <label><input type="checkbox" value="Wednesday" class="dayChk" /> Wednesday</label>
+            <label><input type="checkbox" value="Thursday" class="dayChk" /> Thursday</label>
+            <label><input type="checkbox" value="Friday" class="dayChk" /> Friday</label>
+            <label><input type="checkbox" value="Saturday" class="dayChk" /> Saturday</label>
+            <label><input type="checkbox" value="Sunday" class="dayChk" /> Sunday</label>
+          </div>
+        </div>
+
+        <div id="formError" class="error" style="display:none"></div>
+
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn" type="submit">Submit Application</button>
+          <button type="button" class="btn ghost" onclick="resetForm()">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer style="text-align:center">
+    Note: Submitted applications will be sent to the Suffield Academy staff Discord via webhook. Keep your webhook secure.
+  </footer>
+
+  <!-- Experience modal (simple) -->
+  <div id="expModal" style="display:none;position:fixed;inset:0;background:rgba(10,12,20,0.45);align-items:center;justify-content:center">
+    <div style="background:#fff;padding:16px;border-radius:12px;max-width:420px;margin:auto;box-shadow:0 8px 30px rgba(12,18,40,0.3)">
+      <h3 style="margin:0 0 8px 0">Add Experience</h3>
+      <div class="field"><label>Group Name</label><input type="text" id="expGroup" /></div>
+      <div class="field"><label>Rank / Role</label><input type="text" id="expRank" /></div>
+      <div class="field"><label>Estimated Time Worked (e.g. 3 months)</label><input type="text" id="expTime" /></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="saveExperience()">Save</button><button class="btn ghost" onclick="hideExpModal()">Cancel</button></div>
+    </div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
