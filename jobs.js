@@ -38,13 +38,13 @@ export const jobs = [
     },
 
     {
-    id: "cas-head-of-department",
-    posted_at: "22/11/2025",
-    title: "HEAD OF CREATIVE ARTS DEPARTMENT",
+    id: "hum-head-of-department",
+    posted_at: "24/11/2025",
+    title: "HEAD OF HUMANITIES DEPARTMENT",
     short_description: "Lead and manage a subject department, oversee curriculum delivery, support teaching staff, and ensure high standards of teaching and learning.",
     full_description: "",
-    department: "Creative Arts",
-    subjects: ["Art & Design","Drama","Music","Fashion Design"]
+    department: "Humanities",
+    subjects: ["Geography", "History", "Religious Education"]
     },
 
     {
@@ -89,5 +89,6 @@ export const jobs = [
     department: "Languages",
     subjects: ["German"]
   }
+
 
 */
