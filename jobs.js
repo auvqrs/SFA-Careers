@@ -76,6 +76,16 @@ export const jobs = [
     department: "",
     subjects: []
     },
+
+    {
+    id: "aht-2025",
+    posted_at: "27/11/2025",
+    title: "ASSISTANT HEADTEACHER",
+    short_description: "An Assistant Headteacher supports the Headteacher in running the school, overseeing teaching quality, student behaviour, staff development, and daily operations to ensure a safe and effective learning environment.",
+    full_description: "The Assistant Headteacher is a key member of the Senior Leadership Team responsible for helping manage the school’s strategic and day-to-day operations. They work closely with the Headteacher to maintain high standards of teaching and learning, oversee curriculum development, monitor student progress, and ensure behaviour policies are followed. The role includes supporting and mentoring staff, leading whole-school initiatives, managing safeguarding responsibilities, and helping create a positive, inclusive, and well-organised school environment. They act as a bridge between staff and senior leadership and may take charge of the school in the Headteacher’s absence.",
+    department: "",
+    subjects: []
+    },
 ];
 
 /*
@@ -92,3 +102,4 @@ export const jobs = [
 
 
 */
+
