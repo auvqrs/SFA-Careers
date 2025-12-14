@@ -1,93 +1,124 @@
 export const jobs = [
+    // Heads of Departments
     {
-        id: "teaching-staff",
-        posted_at: "22/11/2025",
-        title: "TEACHING STAFF",
-        short_description: "Teach subjects such as Sociology, Child Development, Business, Psychology and Economics. KS3-KS5 classes; planning, marking and pastoral support.",
-        full_description: `Deliver high-quality lessons, support student learning, and contribute to a professional and engaging school environment.
-        - Plan and deliver lessons for your assigned subjects.
-        - Assess and monitor student progress, providing constructive feedback.
-        - Attend staff meetings and contribute to curriculum planning.
-        - Support students' pastoral and personal development.
-        - Follow all school policies, safeguarding procedures, and codes of conduct.
-        - Engage actively in the school community, maintaining professionalism and enthusiasm.
-        - Professional development and training opportunities.
-        - In-game recognition and rewards for your contributions.
-        - Experience in a realistic educational environment.`,
+        id: "head-of-technology",
+        posted_at: "14/12/2025",
+        title: "Head of Technology",
+        short_description: "Lead and manage the Technology Department, overseeing curriculum delivery and supporting teaching staff.",
+        full_description: "",
+        department: "Technology",
+        subjects: DEPARTMENTS.tech
+    },
+    {
+        id: "head-of-year-7",
+        posted_at: "14/12/2025",
+        title: "Head of Year 7",
+        short_description: "Oversee academic progress, welfare, and development of Year 7 students.",
+        full_description: "",
         department: "",
         subjects: []
     },
     {
-        id: "cs-head-of-department",
-        posted_at: "22/11/2025",
-        title: "HEAD OF CORE SUBJECTS DEPARTMENT",
-        short_description: "Lead and manage a subject department, oversee curriculum delivery, support teaching staff, and ensure high standards of teaching and learning.",
+        id: "head-of-humanities",
+        posted_at: "14/12/2025",
+        title: "Head of Humanities",
+        short_description: "Lead the Humanities Department, supporting staff and ensuring high standards of teaching and learning.",
+        full_description: "",
+        department: "Humanities",
+        subjects: DEPARTMENTS.humanities
+    },
+    {
+        id: "head-of-social-sciences",
+        posted_at: "14/12/2025",
+        title: "Head of Social Sciences",
+        short_description: "Lead the Social Sciences Department, supporting staff and ensuring high-quality teaching.",
+        full_description: "",
+        department: "Social Sciences",
+        subjects: DEPARTMENTS.social
+    },
+
+    // Teachers
+    {
+        id: "religious-education-teacher",
+        posted_at: "14/12/2025",
+        title: "Religious Education Teacher",
+        short_description: "Teach Religious Education to students across Key Stages.",
+        full_description: "",
+        department: "Humanities",
+        subjects: ["Religious Education"]
+    },
+    {
+        id: "history-teacher",
+        posted_at: "14/12/2025",
+        title: "History Teacher",
+        short_description: "Teach History to students across Key Stages.",
+        full_description: "",
+        department: "Humanities",
+        subjects: ["History"]
+    },
+    {
+        id: "geography-teacher",
+        posted_at: "14/12/2025",
+        title: "Geography Teacher",
+        short_description: "Teach Geography to students across Key Stages.",
+        full_description: "",
+        department: "Humanities",
+        subjects: ["Geography"]
+    },
+    {
+        id: "music-teacher",
+        posted_at: "14/12/2025",
+        title: "Music Teacher",
+        short_description: "Teach Music to students and support departmental activities.",
+        full_description: "",
+        department: "Creative Arts",
+        subjects: ["Music"]
+    },
+    {
+        id: "physical-education-teacher",
+        posted_at: "14/12/2025",
+        title: "Physical Education Teacher",
+        short_description: "Teach PE and support students’ physical development.",
+        full_description: "",
+        department: "PE",
+        subjects: ["Physical Education"]
+    },
+    {
+        id: "english-teacher",
+        posted_at: "14/12/2025",
+        title: "English Teacher",
+        short_description: "Teach English across Key Stages.",
         full_description: "",
         department: "Core Subjects",
-        subjects: ["Mathematics","English","Science"]
+        subjects: ["English"]
+    },
+    {
+        id: "computer-science-teacher",
+        posted_at: "14/12/2025",
+        title: "Computer Science Teacher",
+        short_description: "Teach Computer Science and support Technology Department.",
+        full_description: "",
+        department: "Technology",
+        subjects: ["Computer Science"]
+    },
+    {
+        id: "food-technology-teacher",
+        posted_at: "14/12/2025",
+        title: "Food Technology Teacher",
+        short_description: "Teach Food Technology to students.",
+        full_description: "",
+        department: "Technology",
+        subjects: ["Food Technology"]
     },
 
+    // Support Staff
     {
-    id: "lang-head-of-department",
-    posted_at: "22/11/2025",
-    title: "HEAD OF LANGUAGES DEPARTMENT",
-    short_description: "Lead and manage a subject department, oversee curriculum delivery, support teaching staff, and ensure high standards of teaching and learning.",
-    full_description: "",
-    department: "Languages",
-    subjects: ["German","French","Spanish"]
-    },
-
-    {
-    id: "cas-head-of-department",
-    posted_at: "22/11/2025",
-    title: "HEAD OF CREATIVE ARTS DEPARTMENT",
-    short_description: "Lead and manage a subject department, oversee curriculum delivery, support teaching staff, and ensure high standards of teaching and learning.",
-    full_description: "",
-    department: "Creative Arts",
-    subjects: ["Art & Design","Drama","Music","Fashion Design"]
-    },
-
-    {
-    id: "tech-head-of-department",
-    posted_at: "22/11/2025",
-    title: "HEAD OF TECHNOLOGY DEPARTMENT",
-    short_description: "Lead and manage a subject department, oversee curriculum delivery, support teaching staff, and ensure high standards of teaching and learning.",
-    full_description: "",
-    department: "Technology",
-    subjects: ["Food Technology","Design Technology","Computer Science"]
-    },
-
-    {
-    id: "pe-head-of-department",
-    posted_at: "22/11/2025",
-    title: "HEAD OF PHYSICAL EDUCATION DEPARTMENT",
-    short_description: "Lead and manage a subject department, oversee curriculum delivery, support teaching staff, and ensure high standards of teaching and learning.",
-    full_description: "",
-    department: "PE",
-    subjects: ["Physical Education","Sports Science"]
-    },
-
-    {
-    id: "HOY7-2025",
-    posted_at: "22/11/2025",
-    title: "HEAD OF YEAR 7",
-    short_description: "Oversee the academic progress, welfare, and development of Year 7 students, supporting both staff and pupils to ensure a positive school experience.",
-    full_description: "As Head of Year 7, you will oversee the academic progress, wellbeing, and personal development of all Year 7 students, supporting and guiding teaching staff with pastoral care and student management. You will monitor attendance, behaviour, and performance to ensure a positive learning environment, lead year group meetings, coordinate events, and foster a strong sense of community among students. Additionally, you will communicate with parents and guardians regarding student progress and school matters, contribute to whole-school initiatives, and uphold all school policies and procedures to maintain a safe and professional educational setting.",
-    department: "",
-    subjects: []
-    },
+        id: "inclusion-staff",
+        posted_at: "14/12/2025",
+        title: "Inclusion Staff",
+        short_description: "Support students with additional needs, helping them access the curriculum and thrive.",
+        full_description: "",
+        department: "",
+        subjects: []
+    }
 ];
-
-/*
-
-{
-    id: "german-teacher-2025",
-    posted_at: "22/11/2025",
-    title: "German Teacher",
-    short_description: "Teach KS3–KS4 German to motivated students...",
-    full_description: "Full description text...",
-    department: "Languages",
-    subjects: ["German"]
-  }
-
-*/
