@@ -30,15 +30,6 @@ export const jobs = [
     subjects: []
   },
   {
-    id: "head-of-humanities",
-    posted_at: "14/12/2025",
-    title: "Head of Humanities",
-    short_description: "Lead the Humanities Department, supporting staff and ensuring high standards of teaching and learning.",
-    full_description: "",
-    department: "Humanities",
-    subjects: DEPARTMENTS.humanities
-  },
-  {
     id: "head-of-social-sciences",
     posted_at: "14/12/2025",
     title: "Head of Social Sciences",
