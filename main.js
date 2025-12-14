@@ -165,23 +165,54 @@ window.submitApplication = function(){
   const errBox = document.getElementById('formError'); errBox.style.display='none'; errBox.textContent='';
   const roblox = document.getElementById('robloxUsername').value.trim();
   const discord = document.getElementById('discordUsername').value.trim();
+  const teachingName = document.getElementById('teachingName').value.trim();
   const tz = document.getElementById('timeZone').value.trim();
   const email = document.getElementById('email').value.trim();
   const dep = document.getElementById('department').value;
   const interest = document.getElementById('interest').value.trim();
 
-  if(!roblox || !discord || !tz || !email || !dep || !interest){ errBox.style.display='block'; errBox.textContent='Please fill all required fields.'; return; }
-  if(interest.length < 50){ errBox.style.display='block'; errBox.textContent='Your answer for why you are interested must be at least 50 characters.'; return; }
+  if(!roblox || !discord || !teachingName || !tz || !email || !dep || !interest){
+    errBox.style.display='block';
+    errBox.textContent='Please fill all required fields.';
+    return;
+  }
+
+  // Teaching name should be at least two words (honorific + first + last or honorific + first last)
+  const nameParts = teachingName.split(/\s+/).filter(Boolean);
+  if(nameParts.length < 2){
+    errBox.style.display='block';
+    errBox.textContent='Please enter your teaching name with honorific and full name (e.g. "Mr Mike Harrison").';
+    return;
+  }
+
+  if(interest.length < 50){
+    errBox.style.display='block';
+    errBox.textContent='Your answer for why you are interested must be at least 50 characters.';
+    return;
+  }
 
   const selectedSubjects = Array.from(document.querySelectorAll('.subjectChk:checked')).map(i=>i.value);
-  if(selectedSubjects.length < 1){ errBox.style.display='block'; errBox.textContent='Please select at least one subject in your chosen department.'; return; }
+  if(selectedSubjects.length < 1){
+    errBox.style.display='block';
+    errBox.textContent='Please select at least one subject in your chosen department.';
+    return;
+  }
 
   const selectedDays = Array.from(document.querySelectorAll('.dayChk:checked')).map(i=>i.value);
-  if(selectedDays.length < 4){ errBox.style.display='block'; errBox.textContent='You must select at least 4 working days.'; return; }
+  if(selectedDays.length < 4){
+    errBox.style.display='block';
+    errBox.textContent='You must select at least 4 working days.';
+    return;
+  }
 
   const experiences = Array.from(document.querySelectorAll('.exp-entry')).map(e=>e.firstChild.textContent.trim());
 
+  // prepare embed fields (Discord has a 1024 char limit per field)
+  const roleApplied = currentJob && currentJob.title ? currentJob.title : '—';
+
   const fields = [
+    { name: 'Role Applied For', value: roleApplied || '—' },
+    { name: 'Teaching Name', value: teachingName || '—' },
     { name: 'Roblox Username', value: roblox || '—' },
     { name: 'Discord Username', value: discord || '—' },
     { name: 'Time Zone', value: tz || '—' },
