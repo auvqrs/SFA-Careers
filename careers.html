@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suffield Academy | Careers Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="text-slate-800 font-sans min-h-full flex flex-col antialiased bg-slate-50 selection:bg-emerald-200">
+
+    <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur sticky top-0 z-40 transition-all">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('portal-view')">
+                <div class="w-9 h-9 rounded-lg bg-emerald-800 flex items-center justify-center font-bold text-sm text-white shadow-sm">S</div>
+                <div>
+                    <h1 class="font-bold text-sm tracking-tight text-slate-900">Suffield Academy</h1>
+                    <p class="text-[10px] text-emerald-700 font-bold tracking-wider uppercase">Roblox Campus Faculty</p>
+                </div>
+            </div>
+            <nav class="flex items-center space-x-1">
+                <button onclick="switchView('portal-view')" class="px-3.5 py-2 rounded-lg text-xs font-medium transition text-slate-600 hover:text-emerald-800 hover:bg-emerald-50">Find Jobs</button>
+                <button onclick="navigateToAdmin()" class="px-3.5 py-2 rounded-lg text-xs font-medium transition text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 flex items-center space-x-1">
+                    <span>Admin Panel</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full mx-auto pb-12">
+        
+        <section id="portal-view" class="space-y-12 animate-fade-in">
+            
+            <div class="relative bg-white border-b border-slate-200 overflow-hidden">
+                <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 relative z-10">
+                        <span class="inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 rounded-full border border-emerald-200">Faculty Recruitment Portal</span>
+                        <h2 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight">Shape Next-Gen <br><span class="text-emerald-800">Learning Ecosystems.</span></h2>
+                        <p class="text-sm text-slate-500 leading-relaxed max-w-md">Apply to become part of Suffield Academy's premiere instructional team. We are looking for dedicated educators to build robust curriculum and lead our virtual classrooms.</p>
+                        <div class="flex items-center space-x-4 pt-2">
+                            <button onclick="document.getElementById('open-positions').scrollIntoView({behavior: 'smooth'})" class="px-6 py-3 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition shadow-md shadow-emerald-900/20">View Open Roles</button>
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-500">10+</div>
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-emerald-700">Depts</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 h-64 md:h-96">
+                        <div class="space-y-4">
+                            <img src="https://images.unsplash.com/photo-1690223878361-499ff3cd2a30?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRlYWNoZXIlMjBzdGFmZiUyMHRlYW18ZW58MHx8MHx8fDA%3D" alt="Staff Meeting" class="w-full h-1/2 object-cover rounded-2xl shadow-sm">
+                            <img src="https://plus.unsplash.com/premium_photo-1661964320064-ca1bfb994d11?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHRlYWNoZXJ8ZW58MHx8MHx8fDA%3D" alt="Library" class="w-full h-1/2 object-cover rounded-2xl shadow-sm">
+                        </div>
+                        <img src="https://plus.unsplash.com/premium_photo-1664300900349-afd61c20f8b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHRlYWNoZXJ8ZW58MHx8MHx8fDA%3D" alt="Teacher at Board" class="w-full h-full object-cover rounded-2xl shadow-md">
+                    </div>
+                </div>
+            </div>
+
+            <div id="open-positions" class="max-w-4xl mx-auto px-6 space-y-4 pt-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center space-x-2">
+                        <span>Available Openings</span>
+                        <span id="job-count-badge" class="text-[10px] bg-slate-200 text-slate-700 font-mono px-1.5 py-0.5 rounded-full">0</span>
+                    </h3>
+                </div>
+                <div id="job-listings-container" class="grid gap-4">
+                    <div class="text-center py-12 text-slate-400 text-xs border border-dashed border-slate-200 rounded-xl bg-white">
+                        Synchronizing active academic listings...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="application-view" class="hidden max-w-xl mx-auto bg-white border border-slate-200 rounded-xl p-8 shadow-sm mt-12">
+            <div class="border-b border-slate-200 pb-4 mb-6 flex items-center justify-between">
+                <div>
+                    <span id="target-job-badge" class="text-[10px] font-bold tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded uppercase mb-1 inline-block">Position</span>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-900">Faculty Placement Application</h2>
+                </div>
+                <button onclick="switchView('portal-view')" class="text-xs text-slate-400 hover:text-slate-600 transition">Cancel</button>
+            </div>
+
+            <form id="app-form" onsubmit="handleFormTransition(event)" class="space-y-5">
+                <div>
+                    <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1.5">Full Teaching Name</label>
+                    <input type="text" id="app-teaching-name" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="e.g. Mr. Mike Harrison">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1.5">Roblox Username</label>
+                        <input type="text" id="app-roblox" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="e.g. SuffieldDev">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1.5">Discord Username</label>
+                        <input type="text" id="app-discord" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="e.g. mike_harrison">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1.5">Email Address</label>
+                        <input type="email" id="app-email" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="you@domain.com">
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase">Your Timezone</label>
+                            <a href="https://www.timeanddate.com/time/zones/" target="_blank" rel="noopener" class="text-[10px] text-emerald-700 hover:underline">Time & Date Reference</a>
+                        </div>
+                        <input type="text" id="app-timezone" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="e.g. GMT+1 / CET">
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-5 space-y-4">
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1.5">Target Department</label>
+                        <select id="app-dept" onchange="renderSubjectTree()" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs text-slate-700 focus:outline-none focus:border-emerald-600 transition">
+                            <option value="">-- Choose Department --</option>
+                            <option value="Core Subjects Department">Core Subjects Department</option>
+                            <option value="Humanities Department">Humanities Department</option>
+                            <option value="Languages Department">Languages Department</option>
+                            <option value="Creative Arts Department">Creative Arts Department</option>
+                            <option value="Technology Department">Technology Department</option>
+                            <option value="Social Sciences Department">Social Sciences Department</option>
+                            <option value="PE Department">PE Department</option>
+                        </select>
+                    </div>
+
+                    <div id="subject-selection-zone" class="hidden p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3">
+                        <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase">Select Subject Specializations <span class="text-slate-400 font-normal normal-case">(Minimum 1 required)</span></label>
+                        <div id="subject-checkboxes-grid" class="grid grid-cols-2 gap-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase">Prior Experience Log</label>
+                            <p class="text-[10px] text-slate-400">List historical roles held.</p>
+                        </div>
+                        <button type="button" onclick="toggleModal('exp-modal', true)" class="px-2.5 py-1 text-xs font-semibold bg-emerald-800 hover:bg-emerald-900 text-white rounded transition">+ Add Experience</button>
+                    </div>
+                    <div id="experience-display-list" class="space-y-1.5">
+                        <p class="text-xs text-slate-400 italic py-1">No prior records logged.</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-5 space-y-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase">Why are you interested in a career here?</label>
+                            <span id="char-counter" class="text-[10px] text-slate-400">0 / 50 characters min</span>
+                        </div>
+                        <textarea id="app-interest" required oninput="evaluateCharCount()" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="Detail structural and instructional goals at Suffield Academy..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1.5">Tell us all about yourself</label>
+                        <textarea id="app-bio" required rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition" placeholder="Tell us about your hobbies, routine, schedules, etc..."></textarea>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-5">
+                    <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-2">Operating Rotations <span class="text-slate-400 font-normal normal-case">(Select minimum 4 days)</span></label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Monday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Monday</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Tuesday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Tuesday</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Wednesday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Wednesday</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Thursday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Thursday</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Friday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Friday</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Saturday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Saturday</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                            <input type="checkbox" name="working-days" value="Sunday" class="rounded border-slate-300 text-emerald-800 focus:ring-0 bg-white">
+                            <span>Sunday</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition shadow-sm">Continue to Academy Briefing</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="slides-view" class="hidden max-w-xl mx-auto space-y-4 mt-12">
+            <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                <div class="px-6 py-3 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <span class="text-[10px] font-bold tracking-wider uppercase text-emerald-800">Institutional Review Matrix</span>
+                    <span id="slide-index-indicator" class="text-[10px] font-mono text-slate-400">Slide 1 / 6</span>
+                </div>
+                
+                <div class="relative bg-slate-100 aspect-video flex items-center justify-center overflow-hidden">
+                    <img id="slide-canvas-img" src="" alt="Briefing Core Visual Image" class="w-full h-full object-cover">
+                    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent p-6 pt-16">
+                        <p id="slide-caption" class="text-xs font-medium text-white text-center drop-shadow-sm leading-relaxed">Processing operational values...</p>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+                    <button onclick="navigateSlide(-1)" id="prev-slide-btn" class="px-3 py-1.5 text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 rounded transition disabled:opacity-40">Previous</button>
+                    <button onclick="navigateSlide(1)" id="next-slide-btn" class="px-3 py-1.5 text-xs font-semibold bg-emerald-800 hover:bg-emerald-900 text-white rounded transition">Next Slide</button>
+                    <button onclick="commitApplicationToDatabase()" id="final-submit-btn" class="hidden px-4 py-1.5 text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white rounded transition shadow-sm">Submit Application Portfolio</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin-login-view" class="hidden max-w-sm mx-auto bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4 mt-12">
+            <div class="text-center space-y-1">
+                <h2 class="text-lg font-bold text-slate-900">Staff Terminal Access</h2>
+                <p class="text-xs text-slate-400">Protected parameters entry gateway.</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1">Full Teaching Staff Name</label>
+                    <input type="text" id="admin-staff-name" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 transition" placeholder="e.g. Director Harrison">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold tracking-wider text-slate-400 uppercase mb-1">Security Key</label>
+                    <input type="password" id="admin-password" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 transition" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition shadow-sm">Authorize Terminal</button>
+            </form>
+        </section>
+
+        <section id="admin-view" class="hidden max-w-6xl mx-auto px-6 space-y-10 mt-12">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-900">Academy Operations Center</h2>
+                    <p class="text-xs text-slate-400">Active Controller Session Identity: <span id="admin-staff-display" class="font-mono font-bold text-emerald-700">None</span></p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="handleAdminLogout()" class="text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded transition">Logout</button>
+                    <button onclick="switchView('portal-view')" class="text-xs font-medium bg-emerald-800 hover:bg-emerald-900 text-white px-3 py-1.5 rounded transition">Portal Home</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-4">
+                    <h3 class="text-xs font-bold tracking-wider text-emerald-800 uppercase border-b border-slate-100 pb-2">Publish Vacancy</h3>
+                    <form id="add-job-form" onsubmit="handleCreateJob(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Position Name</label>
+                            <input type="text" id="admin-title" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 transition" placeholder="e.g. Humanities Teacher">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Description <span class="text-slate-400 font-normal">(Row break enabled)</span></label>
+                            <textarea id="admin-desc" required rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 transition" placeholder="Operational expectations..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Requirements <span class="text-slate-400 font-normal">(Row break enabled)</span></label>
+                            <textarea id="admin-reqs" required rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 transition" placeholder="Required profile credentials..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition">Create Opening</button>
+                    </form>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <h3 class="text-xs font-bold tracking-wider text-slate-400 uppercase border-b border-slate-200 pb-2">Circulating Vacancies</h3>
+                    <div id="admin-listings-container" class="space-y-2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200 pt-8 space-y-4">
+                <h3 class="text-xs font-bold tracking-wider text-slate-400 uppercase">Incoming Application Reviews Dashboard</h3>
+                <div id="admin-applications-pipeline" class="space-y-4">
+                    <p class="text-xs text-slate-400 italic">No applications processed from the network yet.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="exp-modal" class="hidden fixed inset-0 bg-slate-950/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-xl p-5 space-y-4 shadow-xl">
+            <div class="border-b border-slate-100 pb-2">
+                <h3 class="font-bold text-emerald-800 text-sm">Add Experience Record</h3>
+                <p class="text-[10px] text-slate-400">Log prior educational operational instances.</p>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Group Name</label>
+                    <input type="text" id="exp-group" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-emerald-600" placeholder="e.g. Suffield Academy Network">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Role Held</label>
+                    <input type="text" id="exp-role" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-emerald-600" placeholder="e.g. Assistant Teacher">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Estimated Time Worked There</label>
+                    <input type="text" id="exp-time" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-emerald-600" placeholder="e.g. 6 Months">
+                </div>
+            </div>
+            <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
+                <button type="button" onclick="toggleModal('exp-modal', false)" class="px-2.5 py-1 text-xs text-slate-400 hover:text-emerald-700 transition">Cancel</button>
+                <button type="button" onclick="saveExperienceRecord()" class="px-3 py-1.5 text-xs font-bold bg-emerald-800 hover:bg-emerald-900 text-white rounded transition">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-slate-200 bg-white text-center py-6 text-[11px] text-slate-400">
+        &copy; 2026 Suffield Academy. Automated Enterprise Career Matrix.
+    </footer>
+
+    <script>
+        // ========================================================
+        // 1. SUPABASE CLIENT & DISCORD WEBHOOK INTEGRATION CONFIGS
+        // ========================================================
+        const SUPABASE_URL = "https://cxvvtpeaalyrfegjqiag.supabase.co"; 
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4dnZ0cGVhYWx5cmZlZ2pxaWFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxMjA5OTUsImV4cCI6MjA5NzY5Njk5NX0.A6bN4US3HC7FXY_-IP_EGdgYWTdLWu-CgW98oRTCbLA"; 
+
+        const DISCORD_JOB_LIFECYCLE_WEBHOOK = "https://discord.com/api/webhooks/1518584387451486378/C0EeF1Th8xZ0iW_gMvnxAKsnFoAPOf8uDfNB6U7su2griYRj_6Hynp9YZ0qIWTp2ICne";
+        const DISCORD_APPLICATION_SUBMIT_WEBHOOK = "https://discord.com/api/webhooks/1440788753311469750/iCSQAL-yysfGv419hIyqM62PB_mSod8m7QMygCFDncI6Y2tTupSJRqsdaWvKOen7MZpH";
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ========================================================
+        // 2. RUNTIME CORE CONFIGURATION DATA
+        // ========================================================
+        let internalExperienceArray = [];
+        let runningSlidesIndex = 0;
+        let isAdminAuthenticated = false;
+
+        const ACADEMY_DEPARTMENT_MAP = {
+            "Core Subjects Department": ["English", "Math", "Science"],
+            "Humanities Department": ["History", "Geography", "Religious Education"],
+            "Languages Department": ["German", "French", "Spanish"],
+            "Creative Arts Department": ["Art & Design", "Drama", "Music", "Fashion Design"],
+            "Technology Department": ["Food Technology", "Design Technology", "Computer Science"],
+            "Social Sciences Department": ["Sociology", "Business", "Psychology", "Economics"],
+            "PE Department": ["Physical Education", "Sports Science"]
+        };
+
+        const RECRUITMENT_SLIDES_ARRAY = [
+            { url: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80", caption: "Welcome to Suffield Academy orientation framework." },
+            { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80", caption: "Instructors must ensure structured lesson deliveries remain consistent." },
+            { url: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80", caption: "All actions logged tracking metric scores are kept on external registers." },
+            { url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80", caption: "Attendance mapping and operational shifts operate via this specific portal node." },
+            { url: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1200&q=80", caption: "Staff discipline is continuously reviewed to ensure standard optimization metrics." },
+            { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80", caption: "Procedures verified. Click 'Submit Application Portfolio' to store properties in database memory." }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            synchronizeSystemData();
+        });
+
+        async function synchronizeSystemData() {
+            await pipelineFetchActiveJobs();
+            await pipelineFetchIncomingApplications();
+        }
+
+        function switchView(viewId) {
+            ['portal-view', 'application-view', 'slides-view', 'admin-login-view', 'admin-view'].forEach(view => {
+                document.getElementById(view).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleModal(modalId, activeState) {
+            const el = document.getElementById(modalId);
+            if(activeState) el.classList.remove('hidden');
+            else el.classList.add('hidden');
+        }
+
+        // ========================================================
+        // 3. SECURE CREDENTIAL ROUTING ROUTINES
+        // ========================================================
+        function navigateToAdmin() {
+            if (isAdminAuthenticated) switchView('admin-view');
+            else switchView('admin-login-view');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const staffName = document.getElementById('admin-staff-name').value.trim();
+            const password = document.getElementById('admin-password').value;
+
+            if (password === 'admin26' && staffName.length > 0) {
+                isAdminAuthenticated = true;
+                document.getElementById('admin-staff-display').innerText = staffName;
+                switchView('admin-view');
+            } else {
+                alert("Security Gateway Alert: Terminal parameters mismatch.");
+            }
+        }
+
+        function handleAdminLogout() {
+            isAdminAuthenticated = false;
+            document.getElementById('admin-staff-name').value = '';
+            document.getElementById('admin-password').value = '';
+            document.getElementById('admin-staff-display').innerText = 'None';
+            switchView('portal-view');
+        }
+
+        // ========================================================
+        // 4. DATABASE SYNC & DISCORD WEBHOOK PIPELINES (EMBEDS)
+        // ========================================================
+        async function sendDiscordWebhookNotification(url, embedPayload) {
+            if (!url) return; 
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(embedPayload)
+                });
+            } catch (err) {
+                console.error("Webhook broadcast network anomaly detected:", err.message);
+            }
+        }
+
+        async function pipelineFetchActiveJobs() {
+            try {
+                let { data: jobs, error } = await supabaseClient.from('jobs').select('*').order('id', { ascending: false });
+                if (error) throw error;
+
+                document.getElementById('job-count-badge').innerText = jobs.length;
+                renderPortalListings(jobs);
+                renderAdminListings(jobs);
+            } catch (err) {
+                console.error("Supabase sync transaction failed: ", err.message);
+            }
+        }
+
+        function renderPortalListings(jobsArray) {
+            const container = document.getElementById('job-listings-container');
+            if (jobsArray.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400 text-xs bg-white border border-dashed border-slate-200 rounded-xl">No open vacancies currently mapped on the network.</div>`;
+                return;
+            }
+
+            container.innerHTML = jobsArray.map(job => `
+                <div class="bg-white border border-slate-200 p-6 rounded-xl flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 transition shadow-md shadow-slate-100 hover:border-emerald-300">
+                    <div class="space-y-3 max-w-xl">
+                        <h4 class="text-lg font-bold text-slate-900 tracking-tight">${escapeHTML(job.title)}</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">${escapeHTML(job.description)}</p>
+                        <div class="pt-2 border-t border-slate-100">
+                            <span class="text-xs text-slate-500 leading-relaxed block whitespace-pre-line"><strong class="text-emerald-800 uppercase tracking-wider text-[10px]">Requirements:</strong>\n${escapeHTML(job.requirements)}</span>
+                        </div>
+                    </div>
+                    <button onclick="initializeApplicationSetup('${escapeHTML(job.title)}')" class="sm:self-start whitespace-nowrap px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition shadow-sm">Apply Now</button>
+                </div>
+            `).join('');
+        }
+
+        // ========================================================
+        // 5. APPLICATION FORM OPERATIONS
+        // ========================================================
+        function initializeApplicationSetup(jobTitle) {
+            document.getElementById('target-job-badge').innerText = jobTitle;
+            document.getElementById('app-form').reset();
+            internalExperienceArray = [];
+            refreshExperienceDisplay();
+            renderSubjectTree();
+            switchView('application-view');
+        }
+
+        function renderSubjectTree() {
+            const targetedDept = document.getElementById('app-dept').value;
+            const subZone = document.getElementById('subject-selection-zone');
+            const subGrid = document.getElementById('subject-checkboxes-grid');
+
+            if (!targetedDept || !ACADEMY_DEPARTMENT_MAP[targetedDept]) {
+                subZone.classList.add('hidden');
+                subGrid.innerHTML = '';
+                return;
+            }
+
+            subZone.classList.remove('hidden');
+            subGrid.innerHTML = ACADEMY_DEPARTMENT_MAP[targetedDept].map(subject => `
+                <label class="flex items-center space-x-2 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:bg-emerald-50 transition select-none text-xs text-slate-600">
+                    <input type="checkbox" name="app-subjects" value="${subject}" class="rounded border-emerald-300 text-emerald-800 focus:ring-0 bg-white">
+                    <span>${subject}</span>
+                </label>
+            `).join('');
+        }
+
+        function evaluateCharCount() {
+            const count = document.getElementById('app-interest').value.length;
+            const indicator = document.getElementById('char-counter');
+            if (count >= 50) {
+                indicator.className = "text-[10px] text-emerald-600 font-bold";
+                indicator.innerText = `${count} characters recorded (Satisfied)`;
+            } else {
+                indicator.className = "text-[10px] text-slate-400";
+                indicator.innerText = `${count} / 50 characters min`;
+            }
+        }
+
+        // ========================================================
+        // 6. EXPERIENCE MODAL
+        // ========================================================
+        function saveExperienceRecord() {
+            const groupName = document.getElementById('exp-group').value.trim();
+            const roleName = document.getElementById('exp-role').value.trim();
+            const timeFrame = document.getElementById('exp-time').value.trim();
+
+            if(!groupName || !roleName || !timeFrame) {
+                alert("All tracking properties must be specified to save log block.");
+                return;
+            }
+
+            internalExperienceArray.push({ group: groupName, role: roleName, time: timeFrame });
+            
+            document.getElementById('exp-group').value = '';
+            document.getElementById('exp-role').value = '';
+            document.getElementById('exp-time').value = '';
+
+            toggleModal('exp-modal', false);
+            refreshExperienceDisplay();
+        }
+
+        function removeExperienceRecord(index) {
+            internalExperienceArray.splice(index, 1);
+            refreshExperienceDisplay();
+        }
+
+        function refreshExperienceDisplay() {
+            const displayList = document.getElementById('experience-display-list');
+            if (internalExperienceArray.length === 0) {
+                displayList.innerHTML = `<p class="text-xs text-slate-400 italic py-1">No prior records logged.</p>`;
+                return;
+            }
+
+            displayList.innerHTML = internalExperienceArray.map((item, idx) => `
+                <div class="flex items-center justify-between bg-slate-50 border border-slate-200 p-2.5 rounded-lg">
+                    <div class="text-xs">
+                        <p class="font-bold text-slate-900">${escapeHTML(item.group)} <span class="text-slate-400 font-normal">(${escapeHTML(item.time)})</span></p>
+                        <p class="text-slate-500 text-[11px]">${escapeHTML(item.role)}</p>
+                    </div>
+                    <button type="button" onclick="removeExperienceRecord(${idx})" class="text-[11px] text-rose-600 hover:underline px-2 py-1 transition">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        // ========================================================
+        // 7. CAROUSEL
+        // ========================================================
+        function handleFormTransition(e) {
+            e.preventDefault();
+
+            const checkedSubjects = Array.from(document.querySelectorAll('input[name="app-subjects"]:checked')).map(cb => cb.value);
+            if (checkedSubjects.length < 1) {
+                alert("Validation Exception: Select at least 1 focus tracking field subject area parameter.");
+                return;
+            }
+
+            if (document.getElementById('app-interest').value.length < 50) {
+                alert("Validation Exception: Open disclosure length falls short of the required 50 base units metric.");
+                return;
+            }
+
+            const checkedDays = Array.from(document.querySelectorAll('input[name="working-days"]:checked')).map(cb => cb.value);
+            if (checkedDays.length < 4) {
+                alert("Validation Exception: Minimum rotation profile requirements evaluate to 4 active choices.");
+                return;
+            }
+
+            runningSlidesIndex = 0;
+            renderSlideWorkspace();
+            switchView('slides-view');
+        }
+
+        function renderSlideWorkspace() {
+            const currentItem = RECRUITMENT_SLIDES_ARRAY[runningSlidesIndex];
+            document.getElementById('slide-canvas-img').src = currentItem.url;
+            document.getElementById('slide-caption').innerText = currentItem.caption;
+            document.getElementById('slide-index-indicator').innerText = `Slide ${runningSlidesIndex + 1} / ${RECRUITMENT_SLIDES_ARRAY.length}`;
+
+            document.getElementById('prev-slide-btn').disabled = (runningSlidesIndex === 0);
+            
+            if (runningSlidesIndex === RECRUITMENT_SLIDES_ARRAY.length - 1) {
+                document.getElementById('next-slide-btn').classList.add('hidden');
+                document.getElementById('final-submit-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('next-slide-btn').classList.remove('hidden');
+                document.getElementById('final-submit-btn').classList.add('hidden');
+            }
+        }
+
+        function navigateSlide(direction) {
+            runningSlidesIndex += direction;
+            if (runningSlidesIndex < 0) runningSlidesIndex = 0;
+            if (runningSlidesIndex >= RECRUITMENT_SLIDES_ARRAY.length) runningSlidesIndex = RECRUITMENT_SLIDES_ARRAY.length - 1;
+            renderSlideWorkspace();
+        }
+
+        // ========================================================
+        // 8. DATA EXPORT ACTIONS
+        // ========================================================
+        async function commitApplicationToDatabase() {
+            const targetPosition = document.getElementById('target-job-badge').innerText;
+            const staffTargetName = document.getElementById('app-teaching-name').value;
+            const rbxUser = document.getElementById('app-roblox').value;
+
+            const payload = {
+                full_teaching_name: staffTargetName,
+                roblox_username: rbxUser,
+                discord_tag: document.getElementById('app-discord').value,
+                email: document.getElementById('app-email').value,
+                timezone: document.getElementById('app-timezone').value,
+                department: document.getElementById('app-dept').value,
+                subjects: Array.from(document.querySelectorAll('input[name="app-subjects"]:checked')).map(cb => cb.value),
+                experience: internalExperienceArray,
+                statement_of_interest: document.getElementById('app-interest').value,
+                biography: document.getElementById('app-bio').value,
+                working_days: Array.from(document.querySelectorAll('input[name="working-days"]:checked')).map(cb => cb.value)
+            };
+
+            try {
+                const { error } = await supabaseClient.from('applications').insert([payload]);
+                if (error) throw error;
+
+                // Rich Embedded Webhook for App Submission
+                await sendDiscordWebhookNotification(DISCORD_APPLICATION_SUBMIT_WEBHOOK, {
+                    content: "@everyone",
+                    embeds: [{
+                        title: "📝 New Faculty Application Received",
+                        color: 1327151, // Emerald green
+                        fields: [
+                            { name: "Applicant Name", value: staffTargetName, inline: true },
+                            { name: "Roblox User", value: rbxUser, inline: true },
+                            { name: "Applied Position", value: targetPosition, inline: false }
+                        ],
+                        footer: { text: "Suffield Academy Recruitment Engine" },
+                        timestamp: new Date().toISOString()
+                    }]
+                });
+
+                await pipelineFetchIncomingApplications();
+                switchView('portal-view');
+            } catch(err) {
+                alert(`Direct database link fault: ${err.message}`);
+            }
+        }
+
+        // ========================================================
+        // 9. ADMINISTRATIVE MANAGEMENT
+        // ========================================================
+        function renderAdminListings(jobsArray) {
+            const container = document.getElementById('admin-listings-container');
+            if (jobsArray.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic bg-white border p-4 rounded-lg">No positions active.</p>`;
+                return;
+            }
+
+            container.innerHTML = jobsArray.map(job => `
+                <div class="bg-white border border-slate-200 p-4 rounded-lg flex items-start justify-between gap-4 hover:border-emerald-300 transition">
+                    <div class="text-xs space-y-1">
+                        <p class="font-bold text-slate-900">${escapeHTML(job.title)}</p>
+                        <p class="text-slate-500 line-clamp-1 whitespace-pre-line">${escapeHTML(job.description)}</p>
+                    </div>
+                    <button onclick="handleDeleteJob(${job.id}, '${escapeHTML(job.title)}')" class="text-[11px] font-semibold bg-rose-50 border border-rose-100 hover:bg-rose-100 text-rose-600 px-2.5 py-1 rounded transition">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        async function handleCreateJob(e) {
+            e.preventDefault();
+            const title = document.getElementById('admin-title').value.trim();
+            const description = document.getElementById('admin-desc').value.trim();
+            const requirements = document.getElementById('admin-reqs').value.trim();
+            const adminName = document.getElementById('admin-staff-display').innerText;
+
+            try {
+                const { error } = await supabaseClient.from('jobs').insert([{ title, description, requirements }]);
+                if (error) throw error;
+
+                // Rich Embedded Webhook for Job Creation
+                await sendDiscordWebhookNotification(DISCORD_JOB_LIFECYCLE_WEBHOOK, {
+                    embeds: [{
+                        title: "💼 New Academic Position Opened",
+                        color: 1327151, // Emerald green
+                        fields: [
+                            { name: "Role Title", value: title, inline: true },
+                            { name: "Managed By", value: adminName, inline: true }
+                        ],
+                        timestamp: new Date().toISOString()
+                    }]
+                });
+
+                document.getElementById('add-job-form').reset();
+                await pipelineFetchActiveJobs();
+                alert("New position catalogued and broadcast completed.");
+            } catch (err) {
+                alert(`Insertion script exception: ${err.message}`);
+            }
+        }
+
+        async function handleDeleteJob(id, title) {
+            if(!confirm("Purge tracking row from global indexing arrays?")) return;
+            const adminName = document.getElementById('admin-staff-display').innerText;
+
+            try {
+                const { error } = await supabaseClient.from('jobs').delete().eq('id', id);
+                if (error) throw error;
+
+                // Rich Embedded Webhook for Job Deletion
+                await sendDiscordWebhookNotification(DISCORD_JOB_LIFECYCLE_WEBHOOK, {
+                    embeds: [{
+                        title: "🚫 Academic Position Closed",
+                        color: 15158332, // Red
+                        fields: [
+                            { name: "Role Title", value: title, inline: true },
+                            { name: "Actioned By", value: adminName, inline: true }
+                        ],
+                        timestamp: new Date().toISOString()
+                    }]
+                });
+
+                await pipelineFetchActiveJobs();
+            } catch (err) {
+                alert(`Deletion structural failure: ${err.message}`);
+            }
+        }
+
+        // ========================================================
+        // 10. PIPELINE: REVIEW APPLICATIONS
+        // ========================================================
+        async function pipelineFetchIncomingApplications() {
+            try {
+                let { data: applications, error } = await supabaseClient.from('applications').select('*').order('id', { ascending: false });
+                if (error) throw error;
+                renderApplicationsPipeline(applications);
+            } catch (err) {
+                console.error("Pipeline read execution dropped: ", err.message);
+            }
+        }
+
+        function renderApplicationsPipeline(appsArray) {
+            const container = document.getElementById('admin-applications-pipeline');
+            if (appsArray.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic bg-white border border-slate-200 rounded-xl p-4 text-center">No submitted application portfolios registered inside the tracking framework database.</p>`;
+                return;
+            }
+
+            container.innerHTML = appsArray.map(app => {
+                const expParsed = Array.isArray(app.experience) ? app.experience : [];
+                const expString = expParsed.map(e => `• ${escapeHTML(e.group)} - ${escapeHTML(e.role)} (${escapeHTML(e.time)})`).join('<br>') || "None listed.";
+                
+                let badgeColor = "bg-slate-100 text-slate-700";
+                if(app.status === 'Accepted') badgeColor = "bg-emerald-50 border border-emerald-200 text-emerald-700";
+                if(app.status === 'Declined') badgeColor = "bg-rose-50 border border-rose-200 text-rose-700";
+
+                return `
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4 shadow-xs relative">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-100 pb-3">
+                            <div>
+                                <h4 class="text-sm font-black text-slate-900">${escapeHTML(app.full_teaching_name)} <span class="font-mono text-[11px] text-slate-400 font-normal">(@${escapeHTML(app.roblox_username)})</span></h4>
+                                <p class="text-[11px] text-emerald-700 font-medium uppercase tracking-wider">${escapeHTML(app.department)} &bull; ${escapeHTML(app.subjects.join(', '))}</p>
+                            </div>
+                            <span class="text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded self-start sm:self-center ${badgeColor}">${app.status}</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600">
+                            <div class="space-y-1">
+                                <p><strong>Discord:</strong> ${escapeHTML(app.discord_tag)}</p>
+                                <p><strong>Email:</strong> ${escapeHTML(app.email)}</p>
+                                <p><strong>Timezone:</strong> ${escapeHTML(app.timezone)}</p>
+                                <p><strong>Target Rotations:</strong> ${escapeHTML(app.working_days.join(', '))}</p>
+                            </div>
+                            <div class="p-2.5 bg-slate-50 border border-slate-100 rounded-lg text-[11px]">
+                                <strong class="text-emerald-800 uppercase text-[9px] tracking-wider block mb-1">Logged Historical Background:</strong>
+                                <div class="leading-relaxed text-slate-700">${expString}</div>
+                            </div>
+                        </div>
+
+                        <div class="text-xs space-y-2 pt-2 border-t border-slate-100">
+                            <p class="whitespace-pre-line text-slate-700 leading-relaxed"><strong>Statement of Motivation:</strong>\n${escapeHTML(app.statement_of_interest)}</p>
+                            <p class="whitespace-pre-line text-slate-500 leading-relaxed"><strong>Biography/Hobbies Details:</strong>\n${escapeHTML(app.biography)}</p>
+                        </div>
+
+                        <div class="bg-slate-50 border border-slate-200/60 p-3.5 rounded-lg flex flex-col sm:flex-row items-stretch sm:items-center gap-3 justify-between">
+                            <div class="flex-grow">
+                                <input type="text" id="comment-input-${app.id}" value="${escapeHTML(app.admin_comment || '')}" class="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-emerald-600" placeholder="Type evaluation appraisal summary notes...">
+                            </div>
+                            <div class="flex items-center space-x-1.5 shrink-0 mt-2 sm:mt-0">
+                                <button onclick="handleProcessApplicationState(${app.id}, 'Declined')" class="px-3 py-1.5 bg-white border border-rose-200 hover:bg-rose-50 text-rose-600 font-bold text-xs rounded transition">Decline</button>
+                                <button onclick="handleProcessApplicationState(${app.id}, 'Accepted')" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded transition shadow-xs">Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function handleProcessApplicationState(applicationId, finalizedStateSelection) {
+            const targetCommentValue = document.getElementById(`comment-input-${applicationId}`).value.trim();
+
+            try {
+                const { error } = await supabaseClient
+                    .from('applications')
+                    .update({ status: finalizedStateSelection, admin_comment: targetCommentValue })
+                    .eq('id', applicationId);
+
+                if (error) throw error;
+
+                alert(`Application folder updated state vector explicitly altered to: ${finalizedStateSelection}`);
+                await pipelineFetchIncomingApplications();
+            } catch (err) {
+                alert(`Critical state routing modification fault dropping transaction: ${err.message}`);
+            }
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+</html>
