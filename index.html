@@ -8,7 +8,45 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="text-slate-800 font-sans min-h-full flex flex-col antialiased bg-slate-50 selection:bg-emerald-200">
+    <div id="system-unavailable">
+    <div class="content">
+        <h1>System Currently Unavailable</h1>
+        <p></p>
+        <p>Please try again later.</p>
+    </div>
+</div>
 
+<style>
+#system-unavailable {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #fff;
+    z-index: 2147483647;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#system-unavailable .content {
+    max-width: 600px;
+    padding: 30px;
+}
+
+#system-unavailable h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#system-unavailable p {
+    font-size: 18px;
+    color: #d0d0d0;
+    margin: 8px 0;
+}
+</style>
     <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur sticky top-0 z-40 transition-all">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('portal-view')">
